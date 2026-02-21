@@ -4,7 +4,7 @@ const config = require('../config');
 module.exports = {
     name: 'clientReady',
     once: true,
-    execute(client) {
+    async execute(client) {
         console.log('═══════════════════════════════════════════════════════════════');
         console.log(`✅ Bot logged in as ${client.user.tag}`);
         console.log(`📊 Servers: ${client.guilds.cache.size}`);
@@ -41,5 +41,55 @@ module.exports = {
         });
         
         console.log('✅ Bot is ready!');
+        
+        // Auto-assign role to all members
+        const autoRoleId = process.env.AUTO_ROLE_ID;
+        if (autoRoleId) {
+            console.log('═══════════════════════════════════════════════════════════════');
+            console.log('🎭 Starting auto-role assignment...');
+            
+            for (const [, guild] of client.guilds.cache) {
+                try {
+                    const role = guild.roles.cache.get(autoRoleId);
+                    if (!role) {
+                        console.log(`❌ Role ${autoRoleId} not found in guild ${guild.name}`);
+                        continue;
+                    }
+                    
+                    const members = await guild.members.fetch();
+                    let assigned = 0;
+                    let skipped = 0;
+                    
+                    for (const [, member] of members) {
+                        if (member.user.bot) {
+                            skipped++;
+                            continue;
+                        }
+                        
+                        if (member.roles.cache.has(autoRoleId)) {
+                            skipped++;
+                            continue;
+                        }
+                        
+                        try {
+                            await member.roles.add(role);
+                            assigned++;
+                            console.log(`✅ Assigned role to ${member.user.tag}`);
+                            
+                            // Small delay to avoid rate limits
+                            await new Promise(resolve => setTimeout(resolve, 1000));
+                        } catch (error) {
+                            console.error(`❌ Error assigning role to ${member.user.tag}:`, error.message);
+                        }
+                    }
+                    
+                    console.log(`✅ Auto-role complete: ${assigned} assigned, ${skipped} skipped`);
+                } catch (error) {
+                    console.error('❌ Error in auto-role assignment:', error);
+                }
+            }
+            
+            console.log('═══════════════════════════════════════════════════════════════');
+        }
     }
 };
