@@ -1,0 +1,16 @@
+{
+  "name": "deadmine-bot",
+  "version": "1.0.0",
+  "description": "Discord logging bot",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": ["discord", "bot", "logging"],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1"
+  }
+}
