@@ -6,7 +6,11 @@ const path = require('path');
 // Verify environment variables
 console.log('🔍 Checking environment variables...');
 const requiredEnvVars = [
-    'DISCORD_TOKEN'
+    'DISCORD_TOKEN',
+    'VOICE_LOG_CHANNEL',
+    'CHAT_LOG_CHANNEL',
+    'MODERATION_LOG_CHANNEL',
+    'ROLE_LOG_CHANNEL'
 ];
 
 const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
@@ -16,7 +20,7 @@ if (missingVars.length > 0) {
     process.exit(1);
 }
 
-console.log('✅ All required environment variables are set');
+console.log('✅ All environment variables are set');
 
 const client = new Client({
     intents: [
