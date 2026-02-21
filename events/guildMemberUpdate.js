@@ -36,7 +36,7 @@ module.exports = {
                     .addFields(
                         { name: 'Пользователь', value: `<@${newMember.id}>`, inline: true },
                         { name: 'ID', value: newMember.id, inline: true },
-                        { name: 'Модератор', value: executor ? `${executor.tag}` : 'Неизвестно', inline: true },
+                        { name: 'Модератор', value: executor ? `<@${executor.id}>` : 'Неизвестно', inline: true },
                         { name: 'Роли', value: addedRoles.map(r => `<@&${r.id}>`).join(', ') }
                     )
                     .setThumbnail(newMember.user.displayAvatarURL())
@@ -53,7 +53,7 @@ module.exports = {
                     .addFields(
                         { name: 'Пользователь', value: `<@${newMember.id}>`, inline: true },
                         { name: 'ID', value: newMember.id, inline: true },
-                        { name: 'Модератор', value: executor ? `${executor.tag}` : 'Неизвестно', inline: true },
+                        { name: 'Модератор', value: executor ? `<@${executor.id}>` : 'Неизвестно', inline: true },
                         { name: 'Роли', value: removedRoles.map(r => `<@&${r.id}>`).join(', ') }
                     )
                     .setThumbnail(newMember.user.displayAvatarURL())
@@ -86,9 +86,9 @@ async function logTimeout(oldMember, newMember, client) {
                 .setColor('#ff6600')
                 .setTitle('⏰ Тайм-аут выдан')
                 .addFields(
-                    { name: 'Пользователь', value: `${newMember.user.tag}`, inline: true },
+                    { name: 'Пользователь', value: `<@${newMember.id}>`, inline: true },
                     { name: 'ID', value: newMember.id, inline: true },
-                    { name: 'Модератор', value: executor ? `${executor.tag}` : 'Неизвестно', inline: true },
+                    { name: 'Модератор', value: executor ? `<@${executor.id}>` : 'Неизвестно', inline: true },
                     { name: 'До', value: `<t:${Math.floor(newMember.communicationDisabledUntilTimestamp / 1000)}:F>` }
                 )
                 .setThumbnail(newMember.user.displayAvatarURL())
@@ -101,9 +101,9 @@ async function logTimeout(oldMember, newMember, client) {
                 .setColor('#00ff00')
                 .setTitle('✅ Тайм-аут снят')
                 .addFields(
-                    { name: 'Пользователь', value: `${newMember.user.tag}`, inline: true },
+                    { name: 'Пользователь', value: `<@${newMember.id}>`, inline: true },
                     { name: 'ID', value: newMember.id, inline: true },
-                    { name: 'Модератор', value: executor ? `${executor.tag}` : 'Неизвестно', inline: true }
+                    { name: 'Модератор', value: executor ? `<@${executor.id}>` : 'Неизвестно', inline: true }
                 )
                 .setThumbnail(newMember.user.displayAvatarURL())
                 .setTimestamp();

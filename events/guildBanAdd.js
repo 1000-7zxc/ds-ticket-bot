@@ -21,9 +21,9 @@ module.exports = {
                 .setColor('#ff0000')
                 .setTitle('🔨 Пользователь забанен')
                 .addFields(
-                    { name: 'Пользователь', value: `${ban.user.tag}`, inline: true },
+                    { name: 'Пользователь', value: `<@${ban.user.id}>`, inline: true },
                     { name: 'ID', value: ban.user.id, inline: true },
-                    { name: 'Модератор', value: executor ? `${executor.tag}` : 'Неизвестно', inline: true },
+                    { name: 'Модератор', value: executor ? `<@${executor.id}>` : 'Неизвестно', inline: true },
                     { name: 'Причина', value: reason }
                 )
                 .setThumbnail(ban.user.displayAvatarURL())

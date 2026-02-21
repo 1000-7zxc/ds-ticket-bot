@@ -24,9 +24,9 @@ module.exports = {
                     .setColor('#ff6600')
                     .setTitle('👢 Пользователь кикнут')
                     .addFields(
-                        { name: 'Пользователь', value: `${member.user.tag}`, inline: true },
+                        { name: 'Пользователь', value: `<@${member.id}>`, inline: true },
                         { name: 'ID', value: member.id, inline: true },
-                        { name: 'Модератор', value: `${executor.tag}`, inline: true },
+                        { name: 'Модератор', value: `<@${executor.id}>`, inline: true },
                         { name: 'Причина', value: reason }
                     )
                     .setThumbnail(member.user.displayAvatarURL())

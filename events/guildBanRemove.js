@@ -20,9 +20,9 @@ module.exports = {
                 .setColor('#00ff00')
                 .setTitle('✅ Пользователь разбанен')
                 .addFields(
-                    { name: 'Пользователь', value: `${ban.user.tag}`, inline: true },
+                    { name: 'Пользователь', value: `<@${ban.user.id}>`, inline: true },
                     { name: 'ID', value: ban.user.id, inline: true },
-                    { name: 'Модератор', value: executor ? `${executor.tag}` : 'Неизвестно', inline: true }
+                    { name: 'Модератор', value: executor ? `<@${executor.id}>` : 'Неизвестно', inline: true }
                 )
                 .setThumbnail(ban.user.displayAvatarURL())
                 .setTimestamp();

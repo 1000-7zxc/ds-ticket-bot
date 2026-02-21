@@ -14,7 +14,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor('#00ff00')
                 .setTitle('🔊 Подключение к голосовому каналу')
-                .setDescription(`${member} подключился к <#${newState.channelId}>`)
+                .setDescription(`<@${member.id}> подключился к <#${newState.channelId}>`)
                 .addFields(
                     { name: 'Пользователь', value: `${member.user.tag}`, inline: true },
                     { name: 'ID', value: member.id, inline: true }
@@ -30,7 +30,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor('#ff0000')
                 .setTitle('🔇 Отключение от голосового канала')
-                .setDescription(`${member} отключился от <#${oldState.channelId}>`)
+                .setDescription(`<@${member.id}> отключился от <#${oldState.channelId}>`)
                 .addFields(
                     { name: 'Пользователь', value: `${member.user.tag}`, inline: true },
                     { name: 'ID', value: member.id, inline: true }
@@ -46,7 +46,7 @@ module.exports = {
             const embed = new EmbedBuilder()
                 .setColor('#ffaa00')
                 .setTitle('🔄 Переключение голосового канала')
-                .setDescription(`${member} переключился с <#${oldState.channelId}> на <#${newState.channelId}>`)
+                .setDescription(`<@${member.id}> переключился с <#${oldState.channelId}> на <#${newState.channelId}>`)
                 .addFields(
                     { name: 'Пользователь', value: `${member.user.tag}`, inline: true },
                     { name: 'ID', value: member.id, inline: true }
