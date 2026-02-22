@@ -1,7 +1,70 @@
-const { ActivityType, EmbedBuilder } = require('discord.js');
+const { ActivityType, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
 const config = require('../config');
 const fs = require('fs');
 const path = require('path');
+
+// Send ticket message
+async function sendTicketMessage(client) {
+    const ticketChannelId = process.env.TICKET_CHANNEL_ID;
+    
+    if (!ticketChannelId) {
+        console.log('⚠️ TICKET_CHANNEL_ID not set, skipping ticket message');
+        return;
+    }
+    
+    for (const [, guild] of client.guilds.cache) {
+        try {
+            const ticketChannel = guild.channels.cache.get(ticketChannelId);
+            
+            if (!ticketChannel) {
+                console.log(`⚠️ Ticket channel not found in guild ${guild.name}`);
+                continue;
+            }
+            
+            // Check if ticket message already exists
+            const messages = await ticketChannel.messages.fetch({ limit: 10 });
+            const existingMessage = messages.find(msg => 
+                msg.author.id === client.user.id && 
+                msg.embeds.length > 0 && 
+                msg.embeds[0].title === '🎫 Система тикетов'
+            );
+            
+            if (existingMessage) {
+                console.log(`✅ Ticket message already exists in ${guild.name}`);
+                continue;
+            }
+            
+            const embed = new EmbedBuilder()
+                .setColor('#0099ff')
+                .setTitle('🎫 Система тикетов')
+                .setDescription(
+                    '**Добро пожаловать в систему тикетов!**\n\n' +
+                    'Нажмите на кнопку ниже, чтобы создать тикет.\n' +
+                    'Наша команда поддержки ответит вам как можно скорее.'
+                )
+                .setFooter({ text: 'DeadMine Support System' })
+                .setTimestamp();
+            
+            const button = new ActionRowBuilder()
+                .addComponents(
+                    new ButtonBuilder()
+                        .setCustomId('create_ticket')
+                        .setLabel('📩 Создать тикет')
+                        .setStyle(ButtonStyle.Primary)
+                );
+            
+            await ticketChannel.send({
+                embeds: [embed],
+                components: [button]
+            });
+            
+            console.log(`✅ Ticket message sent to ${guild.name}`);
+            
+        } catch (error) {
+            console.error('Error sending ticket message:', error);
+        }
+    }
+}
 
 // Helper function to get next Sunday at 00:00
 function getNextSunday() {
@@ -161,6 +224,9 @@ module.exports = {
         
         // Schedule weekly reports
         scheduleWeeklyReport(client);
+        
+        // Send ticket message
+        await sendTicketMessage(client);
         
         console.log('✅ Bot is ready!');
         
