@@ -171,8 +171,9 @@ module.exports = {
             });
             
             // Log ticket closure
-            if (process.env.LOG_CHANNEL_ID) {
-                const logChannel = guild.channels.cache.get(process.env.LOG_CHANNEL_ID);
+            const logChannelId = process.env.MODERATION_LOG_CHANNEL;
+            if (logChannelId) {
+                const logChannel = guild.channels.cache.get(logChannelId);
                 if (logChannel) {
                     const ticketInfo = activeTickets.get(channel.id);
                     const logEmbed = new EmbedBuilder()
@@ -180,7 +181,7 @@ module.exports = {
                         .setTitle('🔒 Тикет закрыт')
                         .addFields(
                             { name: 'Канал', value: channel.name, inline: true },
-                            { name: 'Закрыл', value: user.tag, inline: true },
+                            { name: 'Закрыл', value: `<@${user.id}>`, inline: true },
                             { name: 'Создатель', value: ticketInfo ? `<@${ticketInfo.userId}>` : 'Неизвестно', inline: true }
                         )
                         .setTimestamp();
