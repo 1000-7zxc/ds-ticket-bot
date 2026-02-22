@@ -204,7 +204,7 @@ module.exports = {
         
         client.user.setPresence({
             activities: [{ 
-                name: 'По ошибкам бота писать сюда: ТГ - @bxdsun', 
+                name: 'ТГ админа - @bxdsun', 
                 type: ActivityType.Watching 
             }],
             status: 'online'
